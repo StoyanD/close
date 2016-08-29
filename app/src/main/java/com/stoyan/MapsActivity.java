@@ -3,6 +3,7 @@ package com.stoyan;
 import android.databinding.DataBindingUtil;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,10 +25,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_maps);
+        setActionBar(mBinding.toolbar);
 
-//        mMapFrag = mBinding.;
-
-//        setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         mMapFrag = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fragment_map);
