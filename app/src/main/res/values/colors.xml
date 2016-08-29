@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <integer-array name="crime_district_colors">
+    <array name="crime_district_colors">
         <item>#ff0000</item>
         <item>#eb3600</item>
         <item>#e54800</item>
@@ -13,5 +13,5 @@
         <item>#c5a300</item>
         <item>#b9c800</item>
         <item>#a6ff00</item>
-    </integer-array>
+    </array>
 </resources>
