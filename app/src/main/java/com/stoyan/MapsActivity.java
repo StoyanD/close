@@ -1,9 +1,9 @@
 package com.stoyan;
 
 import android.databinding.DataBindingUtil;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -12,8 +12,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.stoyan.databinding.ActivityMapsBinding;
+import com.stoyan.models.CrimeListApi;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, Callback<CrimeListApi> {
+    private static final String TAG = "MapsActivity";
 
     private GoogleMap mMap;
 
@@ -51,5 +57,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng sydney = new LatLng(37.781833, -122.416316);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        MapApp.getCrimeData(this);
+    }
+
+    @Override
+    public void onResponse(Call<CrimeListApi> call, Response<CrimeListApi> response) {
+        if(response != null){
+            Log.i(TAG, "Response size : " + response.body().getCrimeApiList().size());
+        }
+    }
+
+    @Override
+    public void onFailure(Call<CrimeListApi> call, Throwable t) {
+
     }
 }

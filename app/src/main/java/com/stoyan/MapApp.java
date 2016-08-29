@@ -2,6 +2,14 @@ package com.stoyan;
 
 import android.app.Application;
 
+import com.stoyan.interfaces.CrimeApiInterface;
+import com.stoyan.models.CrimeApi;
+import com.stoyan.models.CrimeListApi;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -27,5 +35,12 @@ public class MapApp extends Application {
                     .build();
         }
         return mRetrofit;
+    }
+
+    public static void getCrimeData(Callback<CrimeListApi> listCallback){
+        CrimeApiInterface crimeApiInterface = getRetrofit().create(CrimeApiInterface.class);
+
+        Call<CrimeListApi> crimeCall = crimeApiInterface.getCrimeJson("10");
+        crimeCall.enqueue(listCallback);
     }
 }
