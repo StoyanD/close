@@ -3,10 +3,7 @@ package com.stoyan;
 import android.app.Application;
 
 import com.stoyan.interfaces.CrimeApiInterface;
-import com.stoyan.models.CrimeApi;
 import com.stoyan.models.CrimeListApi;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,6 +24,8 @@ public class MapApp extends Application {
         super.onCreate();
     }
 
+
+
     public static synchronized Retrofit getRetrofit() {
         if (mRetrofit == null) {
             mRetrofit = new Retrofit.Builder()
@@ -39,8 +38,8 @@ public class MapApp extends Application {
 
     public static void getCrimeData(Callback<CrimeListApi> listCallback){
         CrimeApiInterface crimeApiInterface = getRetrofit().create(CrimeApiInterface.class);
-
-        Call<CrimeListApi> crimeCall = crimeApiInterface.getCrimeJson("10");
+        Call<CrimeListApi> crimeCall = crimeApiInterface.getCrimeJson("2010-01-02T00:00:00.000");
+//        Call<CrimeListApi> crimeCall = crimeApiInterface.getCrimeJson();
         crimeCall.enqueue(listCallback);
     }
 }

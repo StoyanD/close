@@ -63,13 +63,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onResponse(Call<CrimeListApi> call, Response<CrimeListApi> response) {
-        if(response != null){
+        if (response != null) {
             Log.i(TAG, "Response size : " + response.body().getCrimeApiList().size());
         }
     }
 
     @Override
     public void onFailure(Call<CrimeListApi> call, Throwable t) {
-
+        if (call != null) {
+            Log.i(TAG, "call : " + call.request());
+        }
     }
 }

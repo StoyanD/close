@@ -7,7 +7,7 @@ import java.util.List;
  */
 
 public class CrimeListApi {
-    private   List<CrimeApi> crimeApiList;
+    private List<CrimeApi> crimeApiList;
 
     public List<CrimeApi> getCrimeApiList() {
         return crimeApiList;

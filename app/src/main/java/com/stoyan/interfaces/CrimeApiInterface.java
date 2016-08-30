@@ -4,6 +4,7 @@ import com.stoyan.models.CrimeListApi;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Query;
 
 /**
@@ -13,6 +14,10 @@ import retrofit2.http.Query;
 public interface CrimeApiInterface {
     String DATE_QUERY_TAG = "date";
 
-    @GET("/resource/ritf-b9ki.json")
+    @Headers({
+            "Accept: application/json",
+    })
+    @GET("/resource/cuks-n6tp.json")
     Call<CrimeListApi> getCrimeJson(@Query(DATE_QUERY_TAG) String date);
+//    Call<CrimeListApi> getCrimeJson();
 }
