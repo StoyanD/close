@@ -3,7 +3,11 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
-
+    dexOptions {
+        jumboMode true
+//        incremental true
+        javaMaxHeapSize "4g"
+    }
     dataBinding {
         enabled = true
     }
@@ -15,6 +19,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        // Enabling multidex support.
+//        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -35,6 +42,8 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.google.code.gson:gson:2.7'
 
+    //multidex
+    compile 'com.android.support:multidex:+'
 
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.android.support:design:24.2.0'
@@ -43,4 +52,7 @@ dependencies {
 
     //Robotium Testing
     testCompile 'com.jayway.android.robotium:robotium-solo:5.6.1'
+    androidTestCompile('com.android.support:multidex-instrumentation:+') {
+        exclude group: 'com.android.support', module: 'multidex'
+    }
 }

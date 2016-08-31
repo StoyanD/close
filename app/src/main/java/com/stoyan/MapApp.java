@@ -1,9 +1,12 @@
 package com.stoyan;
 
 import android.app.Application;
+import android.support.annotation.NonNull;
 
 import com.stoyan.interfaces.CrimeApiInterface;
-import com.stoyan.models.CrimeListApi;
+import com.stoyan.models.CrimeApi;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,8 +28,9 @@ public class MapApp extends Application {
     }
 
 
-
-    public static synchronized Retrofit getRetrofit() {
+    public static synchronized
+    @NonNull
+    Retrofit getRetrofit() {
         if (mRetrofit == null) {
             mRetrofit = new Retrofit.Builder()
                     .baseUrl(CRIME_BASE_URL)
@@ -36,10 +40,15 @@ public class MapApp extends Application {
         return mRetrofit;
     }
 
-    public static void getCrimeData(Callback<CrimeListApi> listCallback){
+    /**
+     * "2010-01-02T00:00:00.000"
+     *
+     * @param listCallback
+     * @param since
+     */
+    public static void getCrimeData(@NonNull Callback<List<CrimeApi>> listCallback, @NonNull String since) {
         CrimeApiInterface crimeApiInterface = getRetrofit().create(CrimeApiInterface.class);
-        Call<CrimeListApi> crimeCall = crimeApiInterface.getCrimeJson("2010-01-02T00:00:00.000");
-//        Call<CrimeListApi> crimeCall = crimeApiInterface.getCrimeJson();
+        Call<List<CrimeApi>> crimeCall = crimeApiInterface.getCrimeJson(since);
         crimeCall.enqueue(listCallback);
     }
 }

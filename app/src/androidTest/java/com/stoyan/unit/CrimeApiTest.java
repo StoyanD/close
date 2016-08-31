@@ -3,8 +3,9 @@ package com.stoyan.unit;
 import android.test.AndroidTestCase;
 
 import com.stoyan.MapApp;
-import com.stoyan.models.CrimeListApi;
+import com.stoyan.models.CrimeApi;
 
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -23,22 +24,21 @@ public class CrimeApiTest extends AndroidTestCase {
     public void testApiCall() throws InterruptedException {
         final CountDownLatch latch = new CountDownLatch(1);
 
-        MapApp.getCrimeData(new Callback<CrimeListApi>() {
+        MapApp.getCrimeData(new Callback<List<CrimeApi>>() {
             @Override
-            public void onResponse(Call<CrimeListApi> call, Response<CrimeListApi> response) {
+            public void onResponse(Call<List<CrimeApi>> call, Response<List<CrimeApi>> response) {
                 assertNotNull(call);
                 assertNotNull(response);
                 assertNotNull(response.body());
-                assertNotNull(response.body().getCrimeApiList());
-                assertTrue(response.body().getCrimeApiList().size() > 10);
+                assertEquals(368, response.body().size());
                 latch.countDown();
             }
 
             @Override
-            public void onFailure(Call<CrimeListApi> call, Throwable t) {
+            public void onFailure(Call<List<CrimeApi>> call, Throwable t) {
                 fail();
             }
-        });
+        }, "2010-01-02T00:00:00.000");
 
         //Check call succeeded
         assertTrue(latch.await(DELAY_MEDIUM, TimeUnit.MILLISECONDS));

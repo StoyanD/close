@@ -12,13 +12,15 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.stoyan.databinding.ActivityMapsBinding;
-import com.stoyan.models.CrimeListApi;
+import com.stoyan.models.CrimeApi;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, Callback<CrimeListApi> {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, Callback<List<CrimeApi>> {
     private static final String TAG = "MapsActivity";
 
     private GoogleMap mMap;
@@ -58,18 +60,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
-        MapApp.getCrimeData(this);
+        MapApp.getCrimeData(this, "2010-01-02T00:00:00.000");
     }
 
     @Override
-    public void onResponse(Call<CrimeListApi> call, Response<CrimeListApi> response) {
+    public void onResponse(Call<List<CrimeApi>> call, Response<List<CrimeApi>> response) {
         if (response != null) {
-            Log.i(TAG, "Response size : " + response.body().getCrimeApiList().size());
+            Log.i(TAG, "Response size : " + response.body().size());
         }
     }
 
     @Override
-    public void onFailure(Call<CrimeListApi> call, Throwable t) {
+    public void onFailure(Call<List<CrimeApi>> call, Throwable t) {
         if (call != null) {
             Log.i(TAG, "call : " + call.request());
         }

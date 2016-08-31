@@ -1,6 +1,8 @@
 package com.stoyan.interfaces;
 
-import com.stoyan.models.CrimeListApi;
+import com.stoyan.models.CrimeApi;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -18,6 +20,6 @@ public interface CrimeApiInterface {
             "Accept: application/json",
     })
     @GET("/resource/cuks-n6tp.json")
-    Call<CrimeListApi> getCrimeJson(@Query(DATE_QUERY_TAG) String date);
+    Call<List<CrimeApi>> getCrimeJson(@Query(DATE_QUERY_TAG) String date);
 //    Call<CrimeListApi> getCrimeJson();
 }
