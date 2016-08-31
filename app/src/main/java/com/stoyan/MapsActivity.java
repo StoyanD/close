@@ -56,8 +56,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
 
-    ActivityMapsBinding mBinding;
-    SupportMapFragment mMapFrag;
+    private ActivityMapsBinding mBinding;
+    private SupportMapFragment mMapFrag;
 
 
     @Override
@@ -97,7 +97,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-
+    /**
+     * Maps the crime by district on {@link #mMap} in different colors
+     *
+     * @param crimeArray The array of crimes to use to determine the marker colors
+     */
     private void mapCrimePoints(@NonNull List<CrimeApi> crimeArray) {
         int[] colors = getResources().getIntArray(R.array.crime_district_colors);
 
@@ -111,6 +115,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         };
 
+        //Count the occurences of the crimes rate
         for (CrimeApi api : crimeArray) {
             if (api == null) {
                 continue;
@@ -118,7 +123,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             counter.put(api.getDistrict(), 1);
         }
 
+        //Sort the districts by the number of crimes in decsending order
         Map<String, Integer> sorted = sortByValue(counter);
+
+        //Set the colors for the districts
         int i = 0;
         for (Map.Entry<String, Integer> entry : sorted.entrySet()) {
             if (i > 6) {
@@ -130,6 +138,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             i++;
         }
 
+        //Map the district markers and set their colors
         for (Map.Entry<String, LatLng> entry : DistrictMap.entrySet()) {
             MarkerOptions marker = new MarkerOptions().position(entry.getValue());
             marker.title(entry.getKey());
@@ -138,6 +147,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    /**
+     * Generates the SoQl query parameters for {@link com.stoyan.interfaces.CrimeApiInterface} based on how
+     * many months ago till now we want the data for
+     * @param monthsBetween The number of months ago to start from, must be positive number
+     * @return The query params
+     */
     public static String getQueryDateParams(int monthsBetween) {
         //Return today's date formatted
         if (monthsBetween < 1) {
@@ -155,12 +170,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return prefix + dateToStringIso8601(monthsAgo) + mid + dateToStringIso8601(now) + suffix;
     }
 
+    /**
+     * Sorts a {@link Map} from the heighest value to the lowest value
+     * @param map the map to sort
+     * @param <K> The key type
+     * @param <V> The value type
+     * @return A sorted map from the highest value to the lowest in descending order
+     */
     public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
         List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
         Collections.sort(list, new Comparator<Map.Entry<K, V>>() {
             @Override
             public int compare(Map.Entry<K, V> e1, Map.Entry<K, V> e2) {
-//                return (e1.getValue()).compareTo(e2.getValue());
                 return (e2.getValue()).compareTo(e1.getValue());
             }
         });
@@ -173,7 +194,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return result;
     }
 
-    // method definition
+    /**
+     * Generates a marker based on the color given
+     * @param color The color the marker should be
+     * @return The marker
+     */
     public BitmapDescriptor getMarkerIcon(int color) {
         float[] hsv = new float[3];
         Color.colorToHSV(color, hsv);
