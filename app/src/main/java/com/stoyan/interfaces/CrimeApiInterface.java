@@ -14,12 +14,15 @@ import retrofit2.http.Query;
  */
 
 public interface CrimeApiInterface {
-    String DATE_QUERY_TAG = "date";
+    String WHERE_DATE_QUERY_TAG = "$where";
 
     @Headers({
             "Accept: application/json",
     })
+    /**
+     * ?$where=date between '2016-08-01T00:00:00.000' and '2016-08-30T00:00:00.000'
+     */
     @GET("/resource/cuks-n6tp.json")
-    Call<List<CrimeApi>> getCrimeJson(@Query(DATE_QUERY_TAG) String date);
+    Call<List<CrimeApi>> getCrimeJson(@Query(WHERE_DATE_QUERY_TAG) String formattedInBetweenDates);
 //    Call<CrimeListApi> getCrimeJson();
 }

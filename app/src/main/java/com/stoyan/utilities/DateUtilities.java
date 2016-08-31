@@ -27,5 +27,4 @@ public final class DateUtilities {
         df.setTimeZone(TimeZone.getTimeZone("UTC"));
         return df.format(date);
     }
-
 }
