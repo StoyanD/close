@@ -29,11 +29,14 @@ import com.google.gson.annotations.SerializedName;
 public class CrimeApi {
     private static final String LONGITUDE_KEY = "x";
     private static final String LATITUDE_KEY = "y";
+    private static final String DISTRICT_KEY = "pddistrict";
 
     @SerializedName(LONGITUDE_KEY)
     Float longitude;
     @SerializedName(LATITUDE_KEY)
     Float latitude;
+    @SerializedName(DISTRICT_KEY)
+    String district;
 
 
     public Float getLongitude() {
@@ -51,4 +54,13 @@ public class CrimeApi {
     public void setLatitude(Float latitude) {
         this.latitude = latitude;
     }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
 }
