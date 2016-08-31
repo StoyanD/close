@@ -3,6 +3,7 @@ package com.stoyan.unit;
 import android.test.AndroidTestCase;
 
 import com.stoyan.MapApp;
+import com.stoyan.MapsActivity;
 import com.stoyan.models.CrimeApi;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class CrimeApiTest extends AndroidTestCase {
                 assertNotNull(call);
                 assertNotNull(response);
                 assertNotNull(response.body());
-                assertEquals(368, response.body().size());
+                assertTrue(response.body().size() > 1000);
                 latch.countDown();
             }
 
@@ -38,7 +39,7 @@ public class CrimeApiTest extends AndroidTestCase {
             public void onFailure(Call<List<CrimeApi>> call, Throwable t) {
                 fail();
             }
-        }, "2010-01-02T00:00:00.000");
+        }, MapsActivity.getQueryDateParams(1));
 
         //Check call succeeded
         assertTrue(latch.await(DELAY_MEDIUM, TimeUnit.MILLISECONDS));
